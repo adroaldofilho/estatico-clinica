@@ -1,0 +1,65 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>Clínica</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="'/usuario-lista'"> Usuário </a>
+      <a mat-button [routerLink]="'/logout'"> Sair </a>
+      
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+      <span style="font-size: 12px;">Clínica - Gerencia sua clínica</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+
+      <a mat-list-item [routerLink]="'/usuario-lista'"> Usuário </a>
+      
+      <a mat-list-item [routerLink]="'/logout'"> Sair </a>
+      <a mat-list-item (click)="sidenav.toggle()"  mat-list-item>Fechar</a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async)">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="/usuario-lista" routerLinkActive="active">Listar Usuários</a>
+      <a mat-list-item href="/usuario-novo" routerLinkActive="active">Incluir Usuário</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Clínica</span>
+    </mat-toolbar>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->

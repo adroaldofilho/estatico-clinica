@@ -1,0 +1,14 @@
+<div class="container">  
+    <mat-form-field>
+      <input [(ngModel)]="username" matInput placeholder="Email">
+    </mat-form-field>          
+    <mat-form-field>
+      <input matInput placeholder="Senha"  [(ngModel)]="password" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  <div class="form-group col-md-3">    
+    <button (click)="login()" mat-raised-button>Login</button>    
+  </div>    
+</div>    
