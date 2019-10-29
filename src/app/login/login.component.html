@@ -1,4 +1,45 @@
-<div class="container">  
+<div fxLayout="row" fxLayoutAlign="center center" class="login-main">
+  <mat-card >
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="example-form" on >
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width">
+              <input matInput type="email" placeholder="Email" [(ngModel)]="username" name="username" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+          <td><mat-form-field class="example-full-width">
+              <input id="mysecretpassword" maxlength="8" type="password"  (keyup.enter)="login()"
+                     placeholder="Password" matInput showHideInput [(ngModel)]="password" name="password">
+                <i matSuffix
+                   class="material-icons"
+                   showHideTrigger="mysecretpassword"
+                   [showHideStatus]="{ materialIcon: true, id: 'mysecretpassword' }">
+                </i>
+            <!-- <input matInput maxlength="8" placeholder="Senha" [(ngModel)]="password" name="password"
+                   [type]="hide ? 'password' : 'text'" required>
+              <button mat-icon-button matSuffix (click)="hide = !hide" 
+                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button> -->
+            </mat-form-field></td>
+          
+        </tr></table>
+      </form>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="login()" color="primary">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<!-- <div class="container">  
     <mat-form-field>
       <input [(ngModel)]="username" matInput placeholder="Email">
     </mat-form-field>          
@@ -11,4 +52,4 @@
   <div class="form-group col-md-3">    
     <button (click)="login()" mat-raised-button>Login</button>    
   </div>    
-</div>    
+</div>     -->

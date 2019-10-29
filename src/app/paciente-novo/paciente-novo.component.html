@@ -1,0 +1,38 @@
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade"
+            *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+        <a mat-flat-button color="primary" [routerLink]="['/paciente-lista']"><mat-icon>list</mat-icon></a>
+    </div>
+    <mat-card class="example-card">
+        <form [formGroup]="usuarioForm" (ngSubmit)="onFormSubmit()">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Nome do Paciente" formControlName="nome"
+                    [errorStateMatcher]="matcher">
+            <mat-error>
+            <span *ngIf="!usuarioForm.get('nome').valid && usuarioForm.get('nome').touched">Informe o nome do paciente</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Email" formControlName="email"
+                    [errorStateMatcher]="matcher">
+            <mat-error>
+            <span *ngIf="!usuarioForm.get('email').valid && usuarioForm.get('email').touched">Informe o email do paciente</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Telefone" formControlName="telefone"
+                    [errorStateMatcher]="matcher">
+            <mat-error>
+            <span *ngIf="!usuarioForm.get('telefone').valid && usuarioForm.get('telefone').touched">Informe o telefone do paciente</span>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="button-row">
+            <button type="submit" [disabled]="!usuarioForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+        </div>
+        </form>
+    </mat-card>
+</div>

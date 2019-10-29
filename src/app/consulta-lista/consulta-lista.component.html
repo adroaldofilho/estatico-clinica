@@ -1,1 +1,51 @@
-<p>consulta-lista works!</p>
+<div fxLayout="column" fxLayoutAlign="center center" class="container" fxLayoutGap="50px">
+    <div fxLayout="row" fxFlexAlign="center" >
+          
+        <p-autoComplete *ngIf="!isProfissionalLogado"
+                        [(ngModel)]="selectedProfissional" 
+                        [suggestions]="filteredProfissionais" 
+                        (completeMethod)="filterProfissionais($event)"
+                        [size]="30"
+                        [minLength]="1" 
+                        placeholder="Digite o nome do médico" 
+                        [dropdown]="true"
+                        field="value"
+                        (onSelect)="getConsultas($event)">
+            <ng-template let-profissional pTemplate="item">
+                <div class="ui-helper-clearfix">
+                    <div>{{profissional.value}}</div>
+                </div>
+            </ng-template>
+        </p-autoComplete>
+    </div>
+    <div fxLayout="row" fxFlexAlign="center" >
+        <p-fullCalendar [events]="events" [options]="options"></p-fullCalendar>
+    </div>
+</div>
+
+<p-overlayPanel #op [showCloseIcon]="true" [dismissable]="false" appendTo="body">
+  <!-- Content -->
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title><h2>{{paciente.nome}}</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <dl>
+        <dt>Email:</dt>
+        <dd>{{paciente.email}}</dd>
+        <dt>Telefone:</dt>
+        <dd>{{paciente.telefone}}</dd>
+        <dt>Profissional:</dt>
+        <dd>{{usuarioProfissional.nome}}</dd>
+        <dt>Data/Hora:</dt>
+        <dd>{{dataHoraConsulta}}</dd>
+    </dl>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-flat-button color="primary" (click)="confirmaConsulta(idConsulta)">Confirmar</a>
+      <a mat-flat-button color="warn" (click)="cancelaConsulta(idConsulta)">Cancelar</a>
+      <a mat-flat-button *ngIf="isProfissionalLogado" color="primary" [routerLink]="['/consulta-realiza', consulta.idConsulta]">Consultar</a>
+      <a mat-flat-button color="primary" (click)="pacienteChegou(idConsulta)">Paciente Chegou</a>
+      </mat-card-actions>
+  </mat-card>
+</p-overlayPanel>

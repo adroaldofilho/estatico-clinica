@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="/node_modules/primeicons/primeicons.css" />
+<link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/themes/nova-light/theme.css" />
+<link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/primeng.min.css" />
+
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+      <a mat-flat-button color="primary" [routerLink]="['/clinica-lista']"><mat-icon>list</mat-icon></a>
+    </div>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title><h2>{{clinica.nome}}</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <dl>
+          <dt>Telefone:</dt>
+          <dd>{{clinica.telefone}}</dd>
+          <dt>Endereço:</dt>
+          <dd>{{clinica.endereco}}</dd>
+        </dl>
+        
+        <p-pickList [source]="profissionaisTela" [target]="profissionaisClinicaTela" sourceHeader="Profissionais" targetHeader="Profissionais da Clínica" 
+          [responsive]="true" filterBy="nomeProfissional,nomeEspecialidade" (onMoveToTarget)="incluiProfissionalClinica($event)" 
+          (onMoveToSource)="excluiProfissionalClinica($event)">
+          <ng-template let-source pTemplate="item">
+              <div class="ui-helper-clearfix">
+                  <div style="font-size:14px;float:left">{{source.nomeProfissional}} - {{source.nomeEspecialidade}}</div>
+              </div>
+          </ng-template>
+      </p-pickList>
+
+
+        <!-- <dual-list [source]="source" [(destination)]="confirmed" [format]="format"  
+              display="nomeProfissional" key="idProfissional" (destinationChange)="incluiProfissionalClinica($event)"></dual-list> -->
+
+
+
+
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-flat-button color="primary" [routerLink]="['/clinica-editar', clinica.idClinica]"><mat-icon>edit</mat-icon></a>
+        <a mat-flat-button color="warn" (click)="deleteClinica(usuario.idUsuario)"><mat-icon>delete</mat-icon></a>
+      </mat-card-actions>
+    </mat-card>
+  </div>

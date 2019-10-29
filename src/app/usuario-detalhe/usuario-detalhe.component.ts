@@ -15,7 +15,8 @@ export class UsuarioDetalheComponent implements OnInit {
                      email: '',
                      telefone: '',
                      senha: '',
-                     picture: null};
+                     picture: null,
+                     tipoUsuario: ''};
   isLoadingResults = true;
   constructor(private route: ActivatedRoute, private api: UsuarioService, private router: Router) { }
 

@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="/node_modules/primeicons/primeicons.css" />
+<link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/themes/nova-light/theme.css" />
+<link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/primeng.min.css" />
+
+<div fxLayout="row" fxLayoutAlign="center center" class="container">
+  <div class="example-loading-shade"
+      *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  
+  <mat-card class="example-card">
+    <mat-card-header class="card-header">
+        <dl>
+            <dt><h2>{{tituloConsulta}}</h2></dt>
+            <dt>Email:</dt>
+            <dd>{{paciente.email}}</dd>
+            <dt>Telefone:</dt>
+            <dd>{{paciente.telefone}}</dd>
+        </dl>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-tab-group>
+            <mat-tab label="Consulta">
+                
+                        
+                    <div fxLayout="row" fxLayoutAlign="center" class="container">
+
+                        <div fxLayout="column" fxFlex="70" >
+                            <div fxLayout="column" fxFlex="15" >
+                                <h2>Consulta: </h2>
+                            </div>
+                            <div fxLayout="column" fxFlex="80" >
+                                <textarea [(ngModel)]="textoConsulta" rows="20" cols="100" pInputTextarea autoResize="autoResize"></textarea>
+                            </div>
+                        </div>
+                        <!-- <div fxLayout="row" fxFlex="30" fxFlexAlign="center">
+                            
+                        </div> -->
+                    </div>
+        
+            </mat-tab>
+            <mat-tab label="Prontuários">
+                    <div fxLayout="row" fxLayoutAlign="left" >
+                        <div fxLayout="column" fxFlex="30" fxFlexAlign="left">
+                            <p-orderList [value]="consultas" 
+                                         [listStyle]="{'height':'270px'}" 
+                                         header="Consultas">
+                                    <ng-template let-consulta pTemplate="item" >
+                                    <div class="ui-helper-clearfix" (click)="selecionaConsulta(consulta)">
+                                        <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{consulta.dataHoraFormatada}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-orderList>
+                        </div>
+                        <div fxLayout="column" fxFlex="70" fxFlexAlign="left" >
+                            <textarea [(ngModel)]="textoConsultaSelecionada" rows="20" cols="100" pInputTextarea autoResize="autoResize" disabled="true"></textarea>
+                            
+                        </div>
+                    </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <a mat-flat-button color="primary" (click)="salvaDocumentoConsulta()"><mat-icon>save</mat-icon></a>
+    </mat-card-actions>
+</mat-card>
+    <div fxLayout="column"  fxFlexAlign="center">
+     
+    </div>
+  
+</div>
+

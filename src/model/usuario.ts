@@ -1,3 +1,5 @@
+import { Consulta } from './consulta';
+
 export class Usuario {
     idUsuario: number;
     nome: string;
@@ -5,4 +7,6 @@ export class Usuario {
     telefone: string;
     senha: string;
     picture: Blob;
+    tipoUsuario: string;
+    Consulta?: Consulta[];
 }

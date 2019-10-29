@@ -1,0 +1,35 @@
+.container {
+    position: relative;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .listbox-header {
+      font-size: 16px;
+      font-weight: bold;
+  }
+
+  .listbox-container {
+      width: 100%;
+      height: 200px;
+  }
+
+.example-card {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  align-items: center;
+
+}
+.example-full-width {
+  width: 100%;
+}
+button{
+    margin-bottom: 10px;
+}
+
+.login-main {
+  margin-top: 10%;
+}

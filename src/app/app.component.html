@@ -1,43 +1,67 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <button mat-icon-button>
-      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-    </button>
-    <h1>Clínica</h1>
-    <span class="menu-spacer"></span>
-    <div>
-      <a *ngIf="!isAuthenticated()" mat-button [routerLink]="''"> Entrar </a>
-      <a *ngIf="isAuthenticated()" mat-button [routerLink]="'/consulta-lista'"> Consulta </a>
-      <a *ngIf="isAuthenticated()" mat-button [routerLink]="'/paciente-lista'"> Paciente </a>
-      <a *ngIf="isAuthenticated()" mat-button [routerLink]="'/usuario-lista'"> Usuário </a>
-      <a *ngIf="isAuthenticated()" mat-button (click)="logout()"> Sair </a>
-    </div>
-  </mat-toolbar-row>
-  <mat-toolbar-row>
-    <span *ngIf="isAuthenticated()" style="font-size: 12px;" >Bem vindo, {{ usuarioLogado.nome }}!</span>
+<mat-toolbar color="primary" class="my-toolbar">
+    <mat-toolbar-row>
+      <button mat-icon-button>
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+      </button>
+      <h1>Clínica</h1>
+      
+      <div *ngIf="isAuthenticated()">
+        <!-- <a *ngIf="!isAuthenticated()" mat-button [routerLink]="''"> Entrar </a> -->
+        <a  mat-button [routerLink]="'/consulta-lista'"><mat-icon>assignment</mat-icon> Agenda </a>
+        <a  mat-button [routerLink]="'/paciente-lista'"><mat-icon>face</mat-icon> Paciente </a>
+        <!-- <a  mat-button [routerLink]="'/usuario-lista'"><mat-icon>perm_identity</mat-icon> Usuário </a> -->
+        <a  mat-button (click)="logout()"><mat-icon>power_settings_new</mat-icon>  Sair </a>
+      </div>
     </mat-toolbar-row>
-</mat-toolbar>
-<mat-sidenav-container>
-  <mat-sidenav #sidenav>
+    <mat-toolbar-row>
+      <span *ngIf="isAuthenticated()" style="font-size: 12px;" >Bem vindo, {{ usuarioLogado.nome }}!</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+<mat-sidenav-container >
+    
+  <mat-sidenav #sidenav >
+    
+    <div *ngIf="isAuthenticated()">
+      <button mat-menu-item [routerLink]="'/consulta-lista'" (click)="sidenav.toggle()"><mat-icon>assignment</mat-icon><span>Agenda</span>  </button>
+      <button mat-menu-item [routerLink]="'/paciente-lista'" (click)="sidenav.toggle()"><mat-icon>face</mat-icon> <span>Paciente</span> </button>
+      <button mat-menu-item [matMenuTriggerFor]="administracao"><mat-icon>supervisor_account</mat-icon>Administração</button>
+      <mat-menu #administracao="matMenu">
+        <button mat-menu-item [routerLink]="'/usuario-lista'" (click)="sidenav.toggle()"> <mat-icon>perm_identity</mat-icon> Usuários</button>
+        <button mat-menu-item [routerLink]="'/clinica-lista'" (click)="sidenav.toggle()"><mat-icon>store_mall_directory</mat-icon> Clínicas</button>
+        <button mat-menu-item [routerLink]="'/especialidade-lista'" (click)="sidenav.toggle()"><mat-icon>person_pin</mat-icon>Especialidades</button>
+        <button mat-menu-item [routerLink]="'/plano-lista'" (click)="sidenav.toggle()"><mat-icon> local_hospital</mat-icon>Planos de Saúde</button>
+      </mat-menu>
+      <button mat-menu-item [routerLink]="''" (click)="sidenav.toggle()"><mat-icon>power_settings_new</mat-icon> <span>Sair</span> </button>
+      <button mat-menu-item (click)="sidenav.toggle()"><mat-icon>highlight_off</mat-icon><span>Fechar</span></button>
+      <!-- <button mat-menu-item [routerLink]="''" (click)="sidenav.toggle()"> <mat-icon>directions_walk</mat-icon><span>Entrar</span></button> -->
+
+    </div>    
+    <!-- <div>
+      <button mat-menu-item [routerLink]="''" (click)="sidenav.toggle()"> <mat-icon>directions_walk</mat-icon><span>Entrar</span></button>
+    </div> -->
+<!--   
     <mat-nav-list>
 
       <a *ngIf="!isAuthenticated()" mat-list-item [routerLink]="''" (click)="sidenav.toggle()"> Entrar </a>
       <div *ngIf="isAuthenticated()">
-        <a mat-list-item [routerLink]="'/consulta-lista'" (click)="sidenav.toggle()"> Consulta </a>
-        <a mat-list-item [routerLink]="'/paciente-lista'" (click)="sidenav.toggle()"> Paciente </a>
-        <a mat-list-item [routerLink]="'/usuario-lista'" (click)="sidenav.toggle()"> Usuário </a>
-        <a mat-list-item [routerLink]="''" (click)="sidenav.toggle()"> Sair </a>
-        <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Fechar</a>
+        <a mat-list-item [routerLink]="'/consulta-lista'" (click)="sidenav.toggle()"><mat-icon>assignment</mat-icon><span>Agenda</span>  </a>
+        <a mat-list-item [routerLink]="'/paciente-lista'" (click)="sidenav.toggle()"><mat-icon>face</mat-icon> <span>Paciente</span> </a>
+        <a mat-list-item [routerLink]="'/usuario-lista'" (click)="sidenav.toggle()"> <mat-icon>perm_identity</mat-icon><span> Usuário</span> </a>
+        <a mat-list-item [routerLink]="''" (click)="sidenav.toggle()"><mat-icon>power_settings_new</mat-icon> <span>Sair</span> </a>
+        <a mat-list-item (click)="sidenav.toggle()" mat-list-item><mat-icon>highlight_off</mat-icon><span>Fechar</span></a>
       </div>
-    </mat-nav-list>
+    </mat-nav-list> -->
   </mat-sidenav>
   <mat-sidenav-content>
-    <div style="height: 88vh;">
+     
+    <div style="height: 88vh; margin-top: 60px">
 
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
 <!-- <div class="container">
   <app-menu></app-menu>
 </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/service/authentication.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material'
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,9 +30,7 @@ export class LoginComponent {
       };
       this.auth.getToken(credentials)
       .subscribe((res: any) => {
-          console.log('res = ', res);
           const token = res.token;
-          console.log('token = ', token);
           this.isLoadingResults = false;
           localStorage.setItem('currentUser', JSON.stringify(res.usuario));
           localStorage.setItem('token', res.token);

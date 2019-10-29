@@ -13,7 +13,7 @@ let headers = new HttpHeaders();
 
 headers = headers.set('Content-Type', 'application/json');
 // headers = headers.append('Access-Control-Allow-Origin', '*');
-const apiUrl = 'http://localhost:5000/api-clinica/v1';
+const apiUrl = 'http://192.168.15.133:5000/api-clinica/v1';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +34,23 @@ export class UsuarioService {
         catchError(this.handleError('getUsuarios', []))
       );
   }
+  
+  getPacientes(): Observable<Usuario[]> {
+    console.log('ApiService: PASSEI AQUI');
+    // console.log(headers);
+    // console.log(apiUrl);
+    const token = localStorage.getItem('token');
+    headers = headers.set('Authorization', `Bearer ${token}`);
+    return this.http.get<Usuario[]>(`${apiUrl}/usuario/tipousuario/Paciente`, { headers })
+      .pipe(
+        tap(Usuarios => console.log('leu os Usuarios')),
+        catchError(this.handleError('getUsuarios', []))
+      );
+  }
 
   getUsuario(id: number): Observable<Usuario> {
+    const token = localStorage.getItem('token');
+    headers = headers.set('Authorization', `Bearer ${token}`);
     const url = `${apiUrl}/usuario/${id}`;
     return this.http.get<Usuario>(url, { headers }).pipe(
       tap(_ => console.log(`leu o Usuario id=${id}`)),

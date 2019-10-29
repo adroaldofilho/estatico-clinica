@@ -18,11 +18,20 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class UsuarioNovoComponent implements OnInit {
   usuarioForm: FormGroup;
+  idUsuario: number = null;
   nome = '';
   email = '';
   telefone = '';
   senha = '';
+  tipoUsuario = '';
   matcher = new MyErrorStateMatcher();
+
+  tipoUsuarios = [
+    {value: 'Paciente', viewValue: 'Paciente'},
+    {value: 'Secretaria', viewValue: 'Secretaria'},
+    {value: 'Profissional', viewValue: 'Profissional'},
+    {value: 'Administrador', viewValue: 'Administrador'}
+  ];
 
   isLoadingResults = false;
 
@@ -30,6 +39,7 @@ export class UsuarioNovoComponent implements OnInit {
 
   ngOnInit() {
     this.usuarioForm = this.formBuilder.group({
+      
       // tslint:disable-next-line: object-literal-key-quotes
       'nome' : [null, Validators.required],
       // tslint:disable-next-line: object-literal-key-quotes
@@ -37,7 +47,9 @@ export class UsuarioNovoComponent implements OnInit {
       // tslint:disable-next-line: object-literal-key-quotes
       'telefone' : [null, Validators.required],
       // tslint:disable-next-line: object-literal-key-quotes
-      'senha' : [null, Validators.required]
+      'senha' : [null, Validators.required],
+      // tslint:disable-next-line: object-literal-key-quotes
+      'tipoUsuario' : [null, Validators.required]
     });
   }
 
@@ -54,4 +66,5 @@ export class UsuarioNovoComponent implements OnInit {
           this.isLoadingResults = false;
         });
   }
+
 }

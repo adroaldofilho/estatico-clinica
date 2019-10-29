@@ -4,9 +4,24 @@
     align-items: center;
   }
   
-  .container > * {
-    width: 40%;
-  }
-  button{
-      margin-bottom: 10px;
-  }
+.container > * {
+  width: 40%;
+}
+.example-card {
+  width: 50%;
+  position: relative;
+  margin: 0 auto;
+}
+.example-full-width {
+  width: 100%;
+}
+button{
+    margin-bottom: 10px;
+}
+
+.login-main {
+  margin-top: 10%;
+}
+mat-card {
+  min-width: 35%;
+}

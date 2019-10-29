@@ -10,11 +10,14 @@ import { Usuario } from 'src/model/usuario';
 export class AppComponent {
 
   usuarioLogado: Usuario;
+  mensagemBemVindo: string = '';
   title = 'estatico-clinica';
 
+
+
+
   constructor(private auth: AuthenticationService, private router: Router) {
-    this.usuarioLogado =  JSON.parse(localStorage.getItem('currentUser'));
-    console.log('usuarioLogado', this.usuarioLogado);
+    
   }
 
   logout() {
@@ -23,6 +26,12 @@ export class AppComponent {
   }
 
   isAuthenticated(): boolean {
+    if (localStorage.getItem('currentUser') !== null) {
+      this.usuarioLogado =  JSON.parse(localStorage.getItem('currentUser'));
+      this.mensagemBemVindo = `Bem vindo, ${this.usuarioLogado.nome}!`;
+    }
+    
+    // console.log('usuarioLogado', this.usuarioLogado);
     return (localStorage.getItem('currentUser') !== null);
   }
 }

@@ -18,12 +18,6 @@ export class UsuarioListaComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private api: UsuarioService) { }
 
   ngOnInit() {
-    let currentUser: Usuario;
-    currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log('currentUser = ', currentUser);
-    const token = localStorage.getItem('token');
-    console.log('token = ', token);
-
     this.api.getUsuarios()
     .subscribe(res => {
       console.log(res);

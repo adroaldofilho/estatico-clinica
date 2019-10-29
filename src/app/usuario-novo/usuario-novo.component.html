@@ -29,6 +29,21 @@
             <span *ngIf="!usuarioForm.get('telefone').valid && usuarioForm.get('telefone').touched">Informe o telefone do usuário</span>
           </mat-error>
         </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Tipo de Usuário</mat-label>
+            <mat-select formControlName="tipoUsuario"
+                   [errorStateMatcher]="matcher"
+                   [(value)]="tipoUsuario">
+                   <mat-option *ngFor="let tipoUsuario of tipoUsuarios" [value]="tipoUsuario.value">
+                      {{tipoUsuario.viewValue}}
+                    </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!usuarioForm.get('tipoUsuario').valid && usuarioForm.get('tipoUsuario').touched">Informe o tipo do usuário</span>
+            </mat-error>
+          </mat-form-field>
+        
         <mat-form-field class="example-full-width">
             <input matInput placeholder="Senha" formControlName="senha"
                    [errorStateMatcher]="matcher">

@@ -12,7 +12,8 @@ import { UsuarioNovoComponent } from './usuario-novo/usuario-novo.component';
 import { UsuarioEditarComponent } from './usuario-editar/usuario-editar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
-
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
 import {
   MatInputModule,
   MatPaginatorModule,
@@ -26,12 +27,42 @@ import {
   MatListModule,
   MatSelectModule,
   MatSidenavModule,
-  MatToolbarModule } from '@angular/material';
+  MatToolbarModule,
+  MatTabsModule } from '@angular/material';
+import { MatMenuModule} from '@angular/material/menu';
+import { AngularDualListBoxModule } from 'angular-dual-listbox';
+import {PickListModule} from 'primeng/picklist';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {ListboxModule} from 'primeng/listbox';
+import {FullCalendarModule} from 'primeng/fullcalendar';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {OrderListModule} from 'primeng/orderlist';
+
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './login/login.component';
 import { ConsultaListaComponent } from './consulta-lista/consulta-lista.component';
 import { PacienteListaComponent } from './paciente-lista/paciente-lista.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { EspecialidadeListaComponent } from './especialidade-lista/especialidade-lista.component';
+import { EspecialidadeDetalheComponent } from './especialidade-detalhe/especialidade-detalhe.component';
+import { EspecialidadeNovoComponent } from './especialidade-novo/especialidade-novo.component';
+import { EspecialidadeEditarComponent } from './especialidade-editar/especialidade-editar.component';
+import { PlanoListaComponent } from './plano-lista/plano-lista.component';
+import { PlanoNovoComponent } from './plano-novo/plano-novo.component';
+import { PlanoDetalheComponent } from './plano-detalhe/plano-detalhe.component';
+import { PlanoEditarComponent } from './plano-editar/plano-editar.component';
+import { PacienteDetalheComponent } from './paciente-detalhe/paciente-detalhe.component';
+import { PacienteNovoComponent } from './paciente-novo/paciente-novo.component';
+import { PacienteEditarComponent } from './paciente-editar/paciente-editar.component';
+import { ConsultaNovoComponent } from './consulta-novo/consulta-novo.component';
+import { ClinicaListaComponent } from './clinica-lista/clinica-lista.component';
+import { ClinicaNovoComponent } from './clinica-novo/clinica-novo.component';
+import { ClinicaDetalheComponent } from './clinica-detalhe/clinica-detalhe.component';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +74,23 @@ import { PacienteListaComponent } from './paciente-lista/paciente-lista.componen
     MenuComponent,
     LoginComponent,
     ConsultaListaComponent,
-    PacienteListaComponent
+    PacienteListaComponent,
+    EspecialidadeListaComponent,
+    EspecialidadeDetalheComponent,
+    EspecialidadeNovoComponent,
+    EspecialidadeEditarComponent,
+    PlanoListaComponent,
+    PlanoNovoComponent,
+    PlanoDetalheComponent,
+    PlanoEditarComponent,
+    PacienteDetalheComponent,
+    PacienteNovoComponent,
+    PacienteEditarComponent,
+    ConsultaNovoComponent,
+    ClinicaListaComponent,
+    ClinicaNovoComponent,
+    ClinicaDetalheComponent,
+    ConsultaRealizaComponent
   ],
   imports: [
     BrowserModule,
@@ -65,9 +112,36 @@ import { PacienteListaComponent } from './paciente-lista/paciente-lista.componen
     LayoutModule,
     MatPaginatorModule,
     MatSortModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FlexLayoutModule,
+    ShowHidePasswordModule,
+    FullCalendarModule,
+    NgMaterialMultilevelMenuModule,
+    MatMenuModule,
+    AngularDualListBoxModule,
+    PickListModule,
+    AutoCompleteModule,
+    ListboxModule,
+    ConfirmDialogModule,
+    MessagesModule,
+    MessageModule,
+    OverlayPanelModule,
+    MatTabsModule,
+    OrderListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ConsultaRealizaComponent } from './consulta-realiza/consulta-realiza.component';
+
+ConfirmDialog.prototype.appendContainer = function(): void {
+  if (this.appendTo) {
+    if (this.appendTo === 'body')
+      document.body.appendChild(this.el.nativeElement);
+    else
+      this.domHandler.appendChild(this.container, this.appendTo);
+  }
+};

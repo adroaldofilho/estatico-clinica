@@ -1,3 +1,12 @@
 .container{
     margin-left: 10px;
 }
+// .my-toolbar{
+//     position: sticky;
+//     position: -webkit-sticky; /* For macOS/iOS Safari */
+//     top: 0; /* Sets the sticky toolbar to be on top */
+//     z-index: 500;
+//   }
+  .mat-spacer{
+    flex: 1 1 auto;
+  }

@@ -1,0 +1,45 @@
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+      <a mat-flat-button color="primary" [routerLink]="['/plano-lista']"><mat-icon>list</mat-icon></a>
+    </div>
+    <mat-card class="example-card">
+      <form [formGroup]="planoForm" (ngSubmit)="onFormSubmit()">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Nome do Plano de Saúde" formControlName="nome"
+                 [errorStateMatcher]="matcher">
+          <mat-error>
+            <span *ngIf="!planoForm.get('nome').valid && planoForm.get('nome').touched">Informe o nome do plano de saúde</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Telefone" formControlName="telefone"
+                   [errorStateMatcher]="matcher">
+            <mat-error>
+              <span *ngIf="!planoForm.get('telefone').valid && planoForm.get('telefone').touched">Informe o telefone do plano de saúde</span>
+            </mat-error>
+          </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Site" formControlName="url"
+                    [errorStateMatcher]="matcher">
+            <mat-error>
+                <span *ngIf="!planoForm.get('url').valid && planoForm.get('url').touched">Informe o site do plano de saúde</span>
+            </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email" formControlName="email"
+                 [errorStateMatcher]="matcher">
+          <mat-error>
+            <span *ngIf="!planoForm.get('email').valid && planoForm.get('email').touched">Informe o email do plano de saúde</span>
+          </mat-error>
+        </mat-form-field>
+        <div class="button-row">
+          <button type="submit" [disabled]="!planoForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
