@@ -3,18 +3,13 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Consulta } from 'src/model/consulta';
+import { environment } from 'src/environments/environment';
 
-
-
-// const httpOptions = {
-//   headers: new HttpHeaders({'Content-Type': 'application/json'})
-// };
+const apiUrl = environment.dbUrl;
 
 let headers = new HttpHeaders();
 
 headers = headers.set('Content-Type', 'application/json');
-// headers = headers.append('Access-Control-Allow-Origin', '*');
-const apiUrl = 'http://192.168.15.133:5000/api-clinica/v1';
 
 @Injectable({
   providedIn: 'root'

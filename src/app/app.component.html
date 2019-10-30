@@ -1,9 +1,9 @@
 <mat-toolbar color="primary" class="my-toolbar">
     <mat-toolbar-row>
-      <button mat-icon-button>
+      <button *ngIf="isAuthenticated()" mat-icon-button>
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </button>
-      <h1>Clínica</h1>
+      <h1>Dr. Adroaldo</h1>
       
       <div *ngIf="isAuthenticated()">
         <!-- <a *ngIf="!isAuthenticated()" mat-button [routerLink]="''"> Entrar </a> -->

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const apiUrl = 'http://192.168.15.133:5000/api-clinica/v1/auth/token';
+const apiUrl = `${environment.dbUrl}/auth/token`;
 let headers = new HttpHeaders();
 // headers = headers.set('Authorization', `Bearer ${token}`);
 headers = headers.append('Content-Type', 'application/json');
