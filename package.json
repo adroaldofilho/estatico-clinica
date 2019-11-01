@@ -1,13 +1,19 @@
 {
   "name": "estatico-clinica",
   "version": "0.0.0",
+  "engines": {
+    "node": "10.16.3",
+    "npm": "6.9.0"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start-old": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "start": "node server.js",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -40,7 +46,10 @@
     "primeng": "^8.0.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@angular/cli": "~8.3.6",
+    "@angular/compiler-cli": "~8.2.8",
+    "typescript": "~3.5.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.6",
