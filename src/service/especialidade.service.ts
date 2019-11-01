@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-import { Especialidade } from 'src/model/Especialidade';
+import { Especialidade } from 'src/model/especialidade';
 import { environment } from 'src/environments/environment';
 
 const apiUrl = environment.dbUrl;
