@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  dbUrl: "http://api-clinica.herokuapp.com/api-clinica/v1"
+  dbUrl: "https://api-clinica.herokuapp.com/api-clinica/v1"
 };
