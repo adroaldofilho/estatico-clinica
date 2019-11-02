@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  dbUrl: "http://192.168.15.133:5000/api-clinica/v1"
+  dbUrl: "https://api-clinica.herokuapp.com/api-clinica/v1"
+  // dbUrl: "http://192.168.15.133:5000/api-clinica/v1"
 };
 
 /*

@@ -25,13 +25,14 @@
     <div *ngIf="isAuthenticated()">
       <button mat-menu-item [routerLink]="'/consulta-lista'" (click)="sidenav.toggle()"><mat-icon>assignment</mat-icon><span>Agenda</span>  </button>
       <button mat-menu-item [routerLink]="'/paciente-lista'" (click)="sidenav.toggle()"><mat-icon>face</mat-icon> <span>Paciente</span> </button>
-      <button mat-menu-item [matMenuTriggerFor]="administracao"><mat-icon>supervisor_account</mat-icon>Administração</button>
-      <mat-menu #administracao="matMenu">
+      <button *ngIf="isAdministrador" mat-menu-item [matMenuTriggerFor]="administracao"><mat-icon>supervisor_account</mat-icon>Administração</button>
+      <mat-menu  #administracao="matMenu">
         <button mat-menu-item [routerLink]="'/usuario-lista'" (click)="sidenav.toggle()"> <mat-icon>perm_identity</mat-icon> Usuários</button>
         <button mat-menu-item [routerLink]="'/clinica-lista'" (click)="sidenav.toggle()"><mat-icon>store_mall_directory</mat-icon> Clínicas</button>
         <button mat-menu-item [routerLink]="'/especialidade-lista'" (click)="sidenav.toggle()"><mat-icon>person_pin</mat-icon>Especialidades</button>
         <button mat-menu-item [routerLink]="'/plano-lista'" (click)="sidenav.toggle()"><mat-icon> local_hospital</mat-icon>Planos de Saúde</button>
       </mat-menu>
+      <button *ngIf="!isAdministrador" mat-menu-item [routerLink]="'/plano-lista'" (click)="sidenav.toggle()"><mat-icon> local_hospital</mat-icon>Planos de Saúde</button>
       <button mat-menu-item [routerLink]="''" (click)="sidenav.toggle()"><mat-icon>power_settings_new</mat-icon> <span>Sair</span> </button>
       <button mat-menu-item (click)="sidenav.toggle()"><mat-icon>highlight_off</mat-icon><span>Fechar</span></button>
       <!-- <button mat-menu-item [routerLink]="''" (click)="sidenav.toggle()"> <mat-icon>directions_walk</mat-icon><span>Entrar</span></button> -->

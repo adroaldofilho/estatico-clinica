@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="container" fxLayoutGap="50px">
     <div fxLayout="row" fxFlexAlign="center" >
-          
+        <!-- <a mat-flat-button color="primary" [routerLink]="['/clinica-editar', clinica.idClinica]"><mat-icon>edit</mat-icon></a> -->
         <p-autoComplete *ngIf="!isProfissionalLogado"
                         [(ngModel)]="selectedProfissional" 
                         [suggestions]="filteredProfissionais" 

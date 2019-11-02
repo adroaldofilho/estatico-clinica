@@ -12,7 +12,7 @@ export class AppComponent {
   usuarioLogado: Usuario;
   mensagemBemVindo: string = '';
   title = 'estatico-clinica';
-
+  isAdministrador = false;
 
 
 
@@ -29,6 +29,11 @@ export class AppComponent {
     if (localStorage.getItem('currentUser') !== null) {
       this.usuarioLogado =  JSON.parse(localStorage.getItem('currentUser'));
       this.mensagemBemVindo = `Bem vindo, ${this.usuarioLogado.nome}!`;
+      if (this.usuarioLogado.tipoUsuario === 'Administrador'){
+        this.isAdministrador = true;
+      } else {
+        this.isAdministrador = false;
+      }
     }
     
     // console.log('usuarioLogado', this.usuarioLogado);
