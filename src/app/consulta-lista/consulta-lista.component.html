@@ -42,10 +42,10 @@
     </dl>
     </mat-card-content>
     <mat-card-actions>
-      <a mat-flat-button color="primary" (click)="confirmaConsulta(idConsulta)">Confirmar</a>
-      <a mat-flat-button color="warn" (click)="cancelaConsulta(idConsulta)">Cancelar</a>
+      <a mat-flat-button color="primary" (click)="confirmaConsulta()">Confirmar</a>
+      <a mat-flat-button color="warn" (click)="cancelaConsulta()">Cancelar</a>
       <a mat-flat-button *ngIf="isProfissionalLogado" color="primary" [routerLink]="['/consulta-realiza', consulta.idConsulta]">Consultar</a>
-      <a mat-flat-button color="primary" (click)="pacienteChegou(idConsulta)">Paciente Chegou</a>
+      <a mat-flat-button color="primary" (click)="pacienteChegou()">Paciente Chegou</a>
       </mat-card-actions>
   </mat-card>
 </p-overlayPanel>
