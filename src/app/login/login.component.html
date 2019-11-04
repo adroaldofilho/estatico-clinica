@@ -32,7 +32,9 @@
           
         </tr></table>
       </form>
-      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button (click)="login()" color="primary">Login</button>

@@ -14,7 +14,7 @@ export class LoginComponent {
   hide = true;
   password: string;
   title = 'auth-guard-demo';
-  isLoadingResults = true;
+  isLoadingResults = false;
 
   constructor(private auth: AuthenticationService, private router: Router) {
     localStorage.removeItem('currentUser');
@@ -23,7 +23,7 @@ export class LoginComponent {
 
   login(): void {
     if (this.username !== '' && this.password !== '') {
-
+      this.isLoadingResults = true;
       const credentials = {
         email: this.username,
         senha: this.password
@@ -31,9 +31,9 @@ export class LoginComponent {
       this.auth.getToken(credentials)
       .subscribe((res: any) => {
           const token = res.token;
-          this.isLoadingResults = false;
           localStorage.setItem('currentUser', JSON.stringify(res.usuario));
           localStorage.setItem('token', res.token);
+          this.isLoadingResults = false;
           this.router.navigate(['consulta-lista']);
         }, (err: any) => {
           console.log(err);
