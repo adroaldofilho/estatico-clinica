@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 import {
   MatInputModule,
   MatPaginatorModule,
@@ -127,7 +128,8 @@ import { ClinicaDetalheComponent } from './clinica-detalhe/clinica-detalhe.compo
     MessageModule,
     OverlayPanelModule,
     MatTabsModule,
-    OrderListModule
+    OrderListModule,
+    DeviceDetectorModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

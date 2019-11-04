@@ -5,7 +5,7 @@
       </button>
       <h1>Dr. Adroaldo</h1>
       
-      <div *ngIf="isAuthenticated()">
+      <div *ngIf="isAuthenticated() && !isMobile">
         <!-- <a *ngIf="!isAuthenticated()" mat-button [routerLink]="''"> Entrar </a> -->
         <a  mat-button [routerLink]="'/consulta-lista'"><mat-icon>assignment</mat-icon> Agenda </a>
         <a  mat-button [routerLink]="'/paciente-lista'"><mat-icon>face</mat-icon> Paciente </a>

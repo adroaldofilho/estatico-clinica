@@ -14,6 +14,7 @@ import { Consulta } from 'src/model/consulta';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { Profissional } from 'src/model/profissional';
 import { Util } from '../util/util';
+import { AutoComplete } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-consulta-lista',
@@ -90,12 +91,13 @@ export class ConsultaListaComponent implements OnInit {
     let self = this;
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
-      
-      header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'timeGridWeek,timeGridDay',
-      },
+      titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+      contentHeight: 'auto',
+      // header: {
+      //     left: 'prev,next today',
+      //     center: 'title',
+      //     right: 'timeGridWeek,timeGridDay',
+      // },
       businessHours: {
         // days of week. an array of zero-based day of week integers (0=Sunday)
         daysOfWeek: [ 1, 2, 3, 4 , 5], // Monday - Thursday
@@ -117,6 +119,25 @@ export class ConsultaListaComponent implements OnInit {
           self.mostraConsulta(info);
       }
     };
+    let device = localStorage.getItem('device');
+    let header = {};
+    if (device === 'mobile'){
+        header = {
+          left: 'prev,next',
+          center: 'title',
+          right: 'today',
+      }
+    } else {
+        header = {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'timeGridWeek,timeGridDay',
+        }
+    }
+    this.options = {...this.options, header};
+
+    console.log(this.options);
+    
   }
 
   getProfissionais() {
@@ -125,12 +146,12 @@ export class ConsultaListaComponent implements OnInit {
       .subscribe((data: any) => {
         // tslint:disable-next-line: no-string-literal
         this.listaProfissionais = data['payload'];
+        
         this.listaProfissionais.map(profissional => {
           let profissionalItem = {
             label: '',
             value: {}
           };
-          console.log('profissional: ', profissional);
           profissionalItem['label'] = profissional.Profissional.Usuario.nome;
           profissionalItem['value'] = profissional.Profissional.Usuario.nome;
           profissionalItem['profissional'] = profissional;
@@ -142,7 +163,10 @@ export class ConsultaListaComponent implements OnInit {
               this.isProfissionalLogado = true;
           }
         });
-        console.log('profissionais mapeados: ', this.profissionais);
+        if (this.profissionais.length === 1 && !this.isProfissionalLogado) {
+          this.selectedProfissional = this.profissionais[0];
+          this.getConsultas(this.selectedProfissional);
+        }
         this.isLoadingResults = false;
       });
   }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/service/authentication.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material'
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,27 @@ export class LoginComponent {
   password: string;
   title = 'auth-guard-demo';
   isLoadingResults = false;
+  deviceInfo = null;
 
-  constructor(private auth: AuthenticationService, private router: Router) {
+  constructor(private auth: AuthenticationService, private router: Router, private deviceService: DeviceDetectorService) {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
+    this.deviceInfo = deviceService.getDeviceInfo();
+    const isMobile = deviceService.isMobile();
+    const isTablet = deviceService.isTablet();
+    const isDesktopDevice = deviceService.isDesktop();
+    let device = '';
+    if (isDesktopDevice){
+      device = 'desktop'
+    } else {
+      device = 'mobile'
+    }
+    console.log(device);
+    localStorage.setItem('device', device);
+    // console.log(this.deviceInfo);
+    // console.log(isMobile);  // returns if the device is a mobile device (android / iPhone / windows-phone etc)
+    // console.log(isTablet);  // returns if the device us a tablet (iPad etc)
+    // console.log(isDesktopDevice); // returns if the app is running on a Desktop browser.
   }
 
   login(): void {

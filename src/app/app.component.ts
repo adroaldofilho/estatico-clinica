@@ -11,13 +11,13 @@ export class AppComponent {
 
   usuarioLogado: Usuario;
   mensagemBemVindo: string = '';
-  title = 'estatico-clinica';
+  title = 'Dr. Adroaldo';
   isAdministrador = false;
-
+  isMobile = false;
 
 
   constructor(private auth: AuthenticationService, private router: Router) {
-    
+
   }
 
   logout() {
@@ -35,7 +35,10 @@ export class AppComponent {
         this.isAdministrador = false;
       }
     }
-    
+    var device = localStorage.getItem('device');
+    if (device === 'mobile'){
+      this.isMobile = true;
+    }
     // console.log('usuarioLogado', this.usuarioLogado);
     return (localStorage.getItem('currentUser') !== null);
   }
