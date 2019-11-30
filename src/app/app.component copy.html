@@ -1,4 +1,4 @@
-<!-- <mat-toolbar color="primary" class="my-toolbar">
+<mat-toolbar color="primary" class="my-toolbar">
     <mat-toolbar-row>
       <button *ngIf="isAuthenticated()" mat-icon-button>
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
@@ -6,17 +6,19 @@
       <h1>Dr. Adroaldo</h1>
       
       <div *ngIf="isAuthenticated() && !isMobile">
+        <!-- <a *ngIf="!isAuthenticated()" mat-button [routerLink]="''"> Entrar </a> -->
         <a  mat-button [routerLink]="'/consulta-lista'"><mat-icon>assignment</mat-icon> Agenda </a>
         <a  mat-button [routerLink]="'/paciente-lista'"><mat-icon>face</mat-icon> Paciente </a>
+        <!-- <a  mat-button [routerLink]="'/usuario-lista'"><mat-icon>perm_identity</mat-icon> Usuário </a> -->
         <a  mat-button (click)="logout()"><mat-icon>power_settings_new</mat-icon>  Sair </a>
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row>
       <span *ngIf="isAuthenticated()" style="font-size: 12px;" >Bem vindo, {{ usuarioLogado.nome }}!</span>
     </mat-toolbar-row>
-  </mat-toolbar> -->
-  <app-navbar></app-navbar>
-  <mat-sidenav-container >
+  </mat-toolbar>
+
+<mat-sidenav-container >
     
   <mat-sidenav #sidenav >
     

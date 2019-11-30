@@ -1,21 +1,10 @@
-<link rel="stylesheet" type="text/css" href="/node_modules/primeicons/primeicons.css" />
-<link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/themes/nova-light/theme.css" />
-<link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/primeng.min.css" />
-<link href='/node_modules/@fullcalendar/core/main.css' rel='stylesheet' />
-<link href='/node_modules/@fullcalendar/daygrid/main.css' rel='stylesheet' />
-<link href='/node_modules/@fullcalendar/timegrid/main.css' rel='stylesheet' />
-<link href='/node_modules/fullcalendar/dist/fullcalendar.min.css' rel='stylesheet' />
+<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="50px">
 
-<div fxLayout="row" fxLayoutAlign="center center" class="container">
-  <div class="example-loading-shade"
-      *ngIf="isLoadingResults">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-  </div>
   <mat-card class="example-card">
     <mat-card-header>
       <mat-card-title><h2>Consulta</h2></mat-card-title>
     </mat-card-header>
-  <mat-card-content>
+    <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="center center" class="container">
       <div fxLayout="row" fxFlex="40">
             <dl>
@@ -29,14 +18,15 @@
             </dl>
       </div>
 
-      <div fxLayout="row" fxFlex="30" fxFlexAlign="center">
+      <div fxLayout="column" fxFlex="60" fxFlexAlign="center">
+        <div fxLayout="row" fxFlex="50" fxFlexAlign="left" style="padding: 10px;">
           
           <p-autoComplete [(ngModel)]="selectedProfissional" 
                           [suggestions]="filteredProfissionais" 
                           (completeMethod)="filterProfissionais($event)"
-                          [size]="30"
+                          [size]="25"
                           [minLength]="1" 
-                          placeholder="Digite o nome do médico" 
+                          placeholder="Escolha o médico" 
                           [dropdown]="true"
                           field="value"
                           (onSelect)="getConsultas($event)">
@@ -47,14 +37,14 @@
               </ng-template>
           </p-autoComplete>
       </div>
-      <div fxLayout="row" fxFlex="30" fxFlexAlign="center">
+      <div fxLayout="row" fxFlex="50" fxFlexAlign="left" style="padding: 10px;">
           
         <p-autoComplete [(ngModel)]="plano" 
                         [suggestions]="filteredPlanos" 
                         (completeMethod)="filterPlanos($event)"
-                        [size]="30"
+                        [size]="25"
                         [minLength]="1" 
-                        placeholder="Digite o nome do plano de saúde" 
+                        placeholder="Escolha o plano de saúde" 
                         [dropdown]="true"
                         field="nome">
             <ng-template let-plano pTemplate="item">
@@ -63,14 +53,40 @@
                 </div>
             </ng-template>
         </p-autoComplete>
+      </div>
     </div>
+      
     </div>
     <div fxLayout="column"  fxFlexAlign="center">
-      <p-confirmDialog [style]="{width: '60vw'}"
+
+        <div class="ui-g-12 ui-md-4">
+      <p-confirmDialog 
         [appendTo]="'body'"
-        [styleClass]="'modal-dialog'"
-        [draggable]="true"
+        
         [closeOnEscape]="true"></p-confirmDialog>  
+        </div>
+        <!-- <p-overlayPanel #op [showCloseIcon]="true" [dismissable]="false" appendTo="body">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <mat-card-title><h2>{{paciente.nome}}</h2></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <dl>
+                  <dt>Email:</dt>
+                  <dd>{{paciente.email}}</dd>
+                  <dt>Telefone:</dt>
+                  <dd>{{paciente.telefone}}</dd>
+                  <dt>Profissional:</dt>
+                  <dd>{{usuarioProfissional.nome}}</dd>
+                  <dt>Data/Hora:</dt>
+                  <dd>{{dataHoraConsulta}}</dd>
+              </dl>
+              </mat-card-content>
+              <mat-card-actions>
+                <a mat-flat-button color="warn" (click)="cancelaConsulta()">Cancelar</a> 
+              </mat-card-actions>
+            </mat-card>
+          </p-overlayPanel> -->
       <p-messages [value]="msgs"></p-messages>
       <p-fullCalendar #fc 
           [events]="events" 
@@ -85,4 +101,5 @@
   </mat-card-actions>
 </mat-card>
 </div>
+
 

@@ -91,7 +91,9 @@ import { ClinicaDetalheComponent } from './clinica-detalhe/clinica-detalhe.compo
     ClinicaListaComponent,
     ClinicaNovoComponent,
     ClinicaDetalheComponent,
-    ConsultaRealizaComponent
+    ConsultaRealizaComponent,
+    LandingPageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -138,6 +140,8 @@ export class AppModule { }
 
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConsultaRealizaComponent } from './consulta-realiza/consulta-realiza.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 ConfirmDialog.prototype.appendContainer = function(): void {
   if (this.appendTo) {

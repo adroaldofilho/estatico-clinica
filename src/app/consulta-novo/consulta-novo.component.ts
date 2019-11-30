@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import { Usuario } from 'src/model/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/service/usuario.service';
@@ -16,6 +16,7 @@ import { Plano } from 'src/model/plano';
 import { Consulta } from 'src/model/consulta';
 import { ProfissionalClinica } from 'src/model/profissionalclinica';
 import { Util } from '../util/util';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-consulta-novo',
@@ -27,9 +28,8 @@ import { Util } from '../util/util';
 
 
 export class ConsultaNovoComponent implements OnInit {
-  
+  @ViewChild('op', {static: false}) op: OverlayPanel;
 
-  // @ViewChild('fc', {static: false}) fc: FullCalendar;
   msgs: Message[] = [];
 
   profissionais: SelectItem[];
@@ -58,6 +58,22 @@ export class ConsultaNovoComponent implements OnInit {
     tipoUsuario: ''};
     isLoadingResults = true;
 
+    usuarioProfissional: Usuario = {
+      idUsuario: 0,
+      email: '',
+      nome: '',
+      picture: null,
+      senha: '',
+      telefone: '',
+      tipoUsuario: ''
+    }
+  
+    profissional: Profissional = {
+      idProfissional: 0,
+      idUsuario: 0,
+      picture: null
+    }
+
   events: any[];
   options: any;
   minimumDate: Date;
@@ -82,12 +98,8 @@ export class ConsultaNovoComponent implements OnInit {
 
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
-      
-      header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
+      titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+      contentHeight: 'auto',
       businessHours: {
         // days of week. an array of zero-based day of week integers (0=Sunday)
         daysOfWeek: [ 1, 2, 3, 4 , 5], // Monday - Thursday
@@ -104,16 +116,34 @@ export class ConsultaNovoComponent implements OnInit {
       weekends: false,
       selectable: true,
       nowIndicator: true,
+      buttonText: {today: 'hoje', month: 'mês', week: 'semana', day: 'dia', list: 'lista'},
       select: function(info) {
         let agora = new Date();
         if (info.start < agora) {
           alert('Marcação de consulta não permitida para esse horário!');
         } else { 
+          console.log('AQUI: ', info);
           self.salvaConsulta(info, self.paciente, self.selectedProfissional);
           this.events = this.events;
         }
       }
     };
+    let device = localStorage.getItem('device');
+    let header = {};
+    if (device === 'mobile'){
+        header = {
+          left: 'prev,next',
+          center: 'title',
+          right: 'today',
+      }
+    } else {
+        header = {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'timeGridWeek,timeGridDay',
+        }
+    }
+    this.options = {...this.options, header};
   }
 
   getUsuarioDetalhe(id: any) {
@@ -223,6 +253,26 @@ export class ConsultaNovoComponent implements OnInit {
       console.log(err);
       this.isLoadingResults = false;
     });;
+  }
+
+  mostraConsulta(info: any, paciente, profissional){
+    if (profissional === undefined){
+      alert("Selecione o médico para marcar a consulta!!")
+    } else if (this.plano === undefined){
+      alert("Selecione o plano de saúde para marcar a consulta!!")
+    } else {
+      console.log('info', info);
+      console.log(profissional);
+      // this.usuarioProfissional = profissional.profissional.Usuario;
+      this.consulta.idUsuario = this.paciente.idUsuario;
+      this.consulta.idProfissionalClinica = profissional.profissional.idProfissionalClinica;
+      this.consulta.dataHoraConsulta = info.start;
+      this.consulta.statusConsulta = 1;
+      this.consulta.idPlano = this.plano.idPlano;
+      let dataHoraConsulta = this.util.formatDate(info.startStr);
+    
+      this.op.toggle(info);
+    }
   }
 
   salvaConsulta(event: any, paciente: Usuario, profissional: any){

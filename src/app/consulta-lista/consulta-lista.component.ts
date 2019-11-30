@@ -93,11 +93,6 @@ export class ConsultaListaComponent implements OnInit {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
       titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
       contentHeight: 'auto',
-      // header: {
-      //     left: 'prev,next today',
-      //     center: 'title',
-      //     right: 'timeGridWeek,timeGridDay',
-      // },
       businessHours: {
         // days of week. an array of zero-based day of week integers (0=Sunday)
         daysOfWeek: [ 1, 2, 3, 4 , 5], // Monday - Thursday
@@ -135,9 +130,6 @@ export class ConsultaListaComponent implements OnInit {
         }
     }
     this.options = {...this.options, header};
-
-    console.log(this.options);
-    
   }
 
   getProfissionais() {

@@ -1,35 +1,24 @@
-.container {
-    position: relative;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    
-  }
-
-  .listbox-header {
-      font-size: 16px;
-      font-weight: bold;
-  }
-
-  .listbox-container {
-      width: 100%;
-      height: 200px;
-  }
-
-.example-card {
-  width: 100%;
+.example-container {
   position: relative;
-  margin: 0 auto;
+  padding: 5px;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
   align-items: center;
-
-}
-.example-full-width {
-  width: 100%;
-}
-button{
-    margin-bottom: 10px;
+  justify-content: center;
 }
 
-.login-main {
-  margin-top: 10%;
+.mat-flat-button {
+  margin: 5px;
+}
+.modal-dialog .ui-dialog {
+  width: 100% !important;
 }

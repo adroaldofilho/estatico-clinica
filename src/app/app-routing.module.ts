@@ -25,6 +25,7 @@ import { ClinicaListaComponent } from './clinica-lista/clinica-lista.component';
 import { ClinicaNovoComponent } from './clinica-novo/clinica-novo.component';
 import { ClinicaDetalheComponent } from './clinica-detalhe/clinica-detalhe.component';
 import { ConsultaRealizaComponent } from './consulta-realiza/consulta-realiza.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   {
@@ -146,9 +147,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent,
+    component: LandingPageComponent,
     data: {
-      title: 'Login'
+      title: 'Início'
     }
   }
   // ,
