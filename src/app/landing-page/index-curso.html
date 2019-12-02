@@ -150,18 +150,22 @@
           <form>
             <div class="form-group">
               <label for="formGroupExampleInput">Nome completo</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Insira seu nome completo">
+              <input type="text" class="form-control" id="formGroupExampleInput" [(ngModel)]="nome" placeholder="Insira seu nome completo">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlInput1">Email</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Deixe seu comentário</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Insira aqui seu comentário"></textarea>
+                <label for="formGroupExampleInput">Telefone</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" [(ngModel)]="telefone"`placeholder="(XX) 99999-9999">
               </div>
-            </form>
-          </main>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Email</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="email" placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Deixe seu comentário</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="comentario" placeholder="Insira aqui seu comentário"></textarea>
+            </div>
+          </form>
+        </main>
         <footer class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
           <button type="button" class="btn botao-cor-especial">Enviar</button>

@@ -3,6 +3,7 @@ import { Usuario } from 'src/model/usuario';
 import { AuthenticationService } from 'src/service/authentication.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -15,6 +16,10 @@ export class NavbarComponent implements OnInit {
   title = 'Dr. Adroaldo';
   isAdministrador = false;
   isMobile = false;
+  nome: string;
+  telefone: string;
+  email: string;
+  comentario: string;
 
   constructor(private auth: AuthenticationService, private router: Router) { }
 
@@ -40,8 +45,31 @@ export class NavbarComponent implements OnInit {
     // console.log('usuarioLogado', this.usuarioLogado);
     return (localStorage.getItem('currentUser') !== null);
   }
-  
+
+  submitComment(){
+    if (this.nome === undefined) {
+      alert('Informe o nome');
+    } else {
+        if (this.telefone === undefined) {
+          alert('Informe o telefone para contato');
+      } else {
+          if (this.email === undefined) {
+            alert('Informe o email');
+        } else {
+            if (this.comentario === undefined) {
+              alert('Digite seu comentário'); 
+            }
+          }
+      }
+    }
+    console.log(this.nome);
+    console.log(this.telefone);
+    console.log(this.email);
+    console.log(this.comentario);
+  }
+
   ngOnInit() {
+    
   }
 
 }

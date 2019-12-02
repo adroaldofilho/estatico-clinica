@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
+import { Component, OnInit, ViewChild, ɵConsole, TemplateRef } from '@angular/core';
 import { Usuario } from 'src/model/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from 'src/service/usuario.service';
@@ -10,13 +10,17 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { FullCalendar } from 'primeng/fullcalendar';
 import { PlanoService } from 'src/service/plano.service';
 import { Plano } from 'src/model/plano';
 import { Consulta } from 'src/model/consulta';
 import { ProfissionalClinica } from 'src/model/profissionalclinica';
 import { Util } from '../util/util';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { Calendar } from '@fullcalendar/core';
+// import { $ } from '../../../node_modules/jquery';
+
+declare var $: any;
+
 
 @Component({
   selector: 'app-consulta-novo',
@@ -29,7 +33,8 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 
 export class ConsultaNovoComponent implements OnInit {
   @ViewChild('op', {static: false}) op: OverlayPanel;
-
+  @ViewChild('modalConfirma', {static: true}) modalConfirma: any;
+  // @ViewChild('calendar', {static: false}) calendar: any;
   msgs: Message[] = [];
 
   profissionais: SelectItem[];
@@ -73,12 +78,15 @@ export class ConsultaNovoComponent implements OnInit {
       idUsuario: 0,
       picture: null
     }
-
-  events: any[];
+  dataHoraConsulta: string = '';
+  nomeMedico: string = '';
+  events: any[] = [];
   options: any;
   minimumDate: Date;
-
+  calendarTela: Calendar;
   util = new Util();
+  calendar: Calendar;
+  calendarEl: any;
 
   constructor(private route: ActivatedRoute, 
               private api: UsuarioService, 
@@ -93,10 +101,13 @@ export class ConsultaNovoComponent implements OnInit {
     this.idUsuario = this.route.snapshot.params['id'];
     this.getUsuarioDetalhe(this.route.snapshot.params['id']);
     this.getProfissionais();
+
     this.getPlanos();
     let self = this;
 
-    this.options = {
+    this.calendarEl = document.getElementById('calendar');
+    this.calendar = new Calendar(this.calendarEl, {
+      // events: this.events,
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
       titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
       contentHeight: 'auto',
@@ -116,18 +127,8 @@ export class ConsultaNovoComponent implements OnInit {
       weekends: false,
       selectable: true,
       nowIndicator: true,
-      buttonText: {today: 'hoje', month: 'mês', week: 'semana', day: 'dia', list: 'lista'},
-      select: function(info) {
-        let agora = new Date();
-        if (info.start < agora) {
-          alert('Marcação de consulta não permitida para esse horário!');
-        } else { 
-          console.log('AQUI: ', info);
-          self.salvaConsulta(info, self.paciente, self.selectedProfissional);
-          this.events = this.events;
-        }
-      }
-    };
+      buttonText: {today: 'hoje', month: 'mês', week: 'semana', day: 'dia', list: 'lista'}
+    });
     let device = localStorage.getItem('device');
     let header = {};
     if (device === 'mobile'){
@@ -143,8 +144,84 @@ export class ConsultaNovoComponent implements OnInit {
           right: 'timeGridWeek,timeGridDay',
         }
     }
-    this.options = {...this.options, header};
+    this.calendar.setOption('header', header);
+    this.calendar.on('dateClick', function(info) {
+      let agora = new Date();
+      if (info.date < agora) {
+        alert('Marcação de consulta não permitida para esse horário!');
+      } else { 
+        console.log('AQUI: ', info);
+        if (self.salvaConsulta(info.date, self.paciente, self.selectedProfissional)){
+          $('#myModal').appendTo("body").modal('show');
+        }
+        
+      }
+    });
+    this.calendar.addEventSource(this.events);
+    
+    console.log('noInit Events', this.events);
+    this.calendar.render();
+    // document.addEventListener('DOMContentLoaded', () =>  {
+    //   var calendarEl = document.getElementById('calendar');
+    
+    //   var calendar = new Calendar(calendarEl, {
+    //     events: self.events,
+    //     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
+    //     titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+    //     contentHeight: 'auto',
+    //     businessHours: {
+    //       // days of week. an array of zero-based day of week integers (0=Sunday)
+    //       daysOfWeek: [ 1, 2, 3, 4 , 5], // Monday - Thursday
+        
+    //       startTime: '08:00', // a start time (10am in this example)
+    //       endTime: '18:00', // an end time (6pm in this example)
+    //     },
+    //     minTime: '08:00:00',
+    //     maxTime: '20:00:00',
+    //     locale: 'pt-br',
+    //     defaultView: 'timeGridWeek',
+    //     allDaySlot: false,
+    //     slotDuration: '00:30',
+    //     weekends: false,
+    //     selectable: true,
+    //     nowIndicator: true,
+    //     buttonText: {today: 'hoje', month: 'mês', week: 'semana', day: 'dia', list: 'lista'},
+    //   });
+    //   let device = localStorage.getItem('device');
+    //   let header = {};
+    //   if (device === 'mobile'){
+    //       header = {
+    //         left: 'prev,next',
+    //         center: 'title',
+    //         right: 'today',
+    //     }
+    //   } else {
+    //       header = {
+    //         left: 'prev,next today',
+    //         center: 'title',
+    //         right: 'timeGridWeek,timeGridDay',
+    //       }
+    //   }
+    //   calendar.setOption('header', header);
+    //   calendar.on('dateClick', function(info) {
+    //     let agora = new Date();
+    //     if (info.date < agora) {
+    //       alert('Marcação de consulta não permitida para esse horário!');
+    //     } else { 
+    //       console.log('AQUI: ', info);
+    //       if (self.salvaConsulta(info.date, self.paciente, self.selectedProfissional)){
+    //         $('#myModal').appendTo("body").modal('show');
+    //       }
+          
+    //     }
+    //   });
+    //   // calendar.addEventSource(this.events);
+    //   // this.calendar = calendar;
+    //   calendar.render();
+    // });
   }
+
+
 
   getUsuarioDetalhe(id: any) {
     this.api.getUsuario(id)
@@ -187,7 +264,11 @@ export class ConsultaNovoComponent implements OnInit {
           this.profissionais.push(profissionalItem);
         });
         console.log('profissionais mapeados: ', this.profissionais);
+        if (this.profissionais.length === 1){
+          this.getConsultas(this.profissionais[0]);
+        }
         this.isLoadingResults = false;
+
       });
   }
   selectProfissional(e) {
@@ -217,6 +298,8 @@ export class ConsultaNovoComponent implements OnInit {
   getConsultas(profissionalItem) {
     this.events = [];
     console.log('onselect profissional', profissionalItem);
+    this.calendar.removeAllEvents();
+
     this.consultaApi.getConsultas(profissionalItem.profissional.idProfissionalClinica)
     .subscribe(res => {
       console.log(res);
@@ -244,10 +327,13 @@ export class ConsultaNovoComponent implements OnInit {
           consultaItem['backgroundColor'] = 'green';
           consultaItem['borderColor'] = 'green';
         }
+        this.calendar.addEvent(consultaItem);
         this.events = [...this.events, consultaItem]
         // this.events.push(consultaItem);
       });
       console.log('consultas: ', this.events);
+      
+      // $('#calendar').refetchEvents();
       this.isLoadingResults = false;
     }, err => {
       console.log(err);
@@ -275,13 +361,16 @@ export class ConsultaNovoComponent implements OnInit {
     }
   }
 
-  salvaConsulta(event: any, paciente: Usuario, profissional: any){
-
+  salvaConsulta(dataConsulta: Date, paciente: Usuario, profissional: any): boolean {
+        
     if (profissional === undefined){
       alert("Selecione o médico para marcar a consulta!!")
+      return false;
     } else if (this.plano === undefined){
       alert("Selecione o plano de saúde para marcar a consulta!!")
+      return false;
     } else {
+      // $('#myModal').modal('toggle');
       const profissional1: Profissional = profissional.profissional.Profissional;
       
       console.log('profissional', profissional); 
@@ -289,44 +378,83 @@ export class ConsultaNovoComponent implements OnInit {
      
       this.consulta.idUsuario = this.paciente.idUsuario;
       this.consulta.idProfissionalClinica = profissional.profissional.idProfissionalClinica;
-      this.consulta.dataHoraConsulta = event.start;
+      this.consulta.dataHoraConsulta = dataConsulta;
+
       this.consulta.statusConsulta = 1;
       this.consulta.idPlano = this.plano.idPlano;
-      let dataHoraConsulta = this.util.formatDate(event.startStr);
-      this.confirmationService.confirm({
-        message: `Confirma a marcação da consulta na data/hora ${dataHoraConsulta} para o paciente ${paciente.nome} com o Dr(a). ${profissional1.Usuario.nome}?`, 
-        acceptLabel: 'Sim',
-        rejectLabel: 'Não',
-        header: 'Confirmação',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            let eventAdded = {
-              "title": paciente.nome,
-              "start": event.startStr,
-              "end": event.endStr
-            }
-            this.events = [...this.events, eventAdded]
-            //this.events.push(eventAdded);
-            
-            this.consultaApi.addConsulta(this.consulta)
-            .subscribe((res: any) => {
-                // tslint:disable-next-line: no-string-literal
-                const id = res['payload'].idConsulta;
-                this.isLoadingResults = false;
-                // this.router.navigate(['/clinica-detalhe', id]);
-              }, (err: any) => {
-                console.log(err);
-                this.isLoadingResults = false;
-              });
 
-            this.msgs = [{severity:'info', summary:'Confirmada', detail:'Consulta salva!'}];
-        },
-        reject: () => {
-            this.msgs = [{severity:'info', summary:'Cancelada', detail:'Consulta cancelada'}];
-        }
-      });
+      this.dataHoraConsulta = this.util.formatDate(dataConsulta);
+      this.nomeMedico = profissional1.Usuario.nome;
+
+      return true;
+      // $('#myModal').on('shown.bs.modal', function () {
+      //   $(this).find('[autofocus]').focus();
+      // });
+
+
+      // let dataHoraConsulta = this.util.formatDate(event.startStr);
+      // this.confirmationService.confirm({
+      //   message: `Confirma a marcação da consulta na data/hora ${dataHoraConsulta} para o 
+      // paciente ${paciente.nome} com o Dr(a). ${profissional1.Usuario.nome}?`, 
+      //   acceptLabel: 'Sim',
+      //   rejectLabel: 'Não',
+      //   header: 'Confirmação',
+      //   icon: 'pi pi-exclamation-triangle',
+      //   accept: () => {
+      //       let eventAdded = {
+      //         "title": paciente.nome,
+      //         "start": event.startStr,
+      //         "end": event.endStr
+      //       }
+      //       this.events = [...this.events, eventAdded]
+      //       //this.events.push(eventAdded);
+            
+      //       this.consultaApi.addConsulta(this.consulta)
+      //       .subscribe((res: any) => {
+      //           // tslint:disable-next-line: no-string-literal
+      //           const id = res['payload'].idConsulta;
+      //           this.isLoadingResults = false;
+      //           // this.router.navigate(['/clinica-detalhe', id]);
+      //         }, (err: any) => {
+      //           console.log(err);
+      //           this.isLoadingResults = false;
+      //         });
+
+      //       this.msgs = [{severity:'info', summary:'Confirmada', detail:'Consulta salva!'}];
+      //   },
+      //   reject: () => {
+      //       this.msgs = [{severity:'info', summary:'Cancelada', detail:'Consulta cancelada'}];
+      //   }
+      // });
       console.log('events', this.events);
     }   
+  }
+
+  confirmaConsulta(){
+    console.log('confirma consulta', this.consulta);
+    this.consultaApi.addConsulta(this.consulta)
+      .subscribe((res: any) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = res['payload'].idConsulta;
+      this.isLoadingResults = false;
+      // this.router.navigate(['/clinica-detalhe', id]);
+      let timeEnd = new Date(this.consulta.dataHoraConsulta);
+
+      timeEnd.setMinutes(timeEnd.getMinutes() + 30);
+      // consultaItem['end'] = timeEnd;
+      let eventAdded = {
+        "title": this.paciente.nome,
+        "start": this.consulta.dataHoraConsulta,
+        "end": timeEnd
+      }
+      this.calendar.addEvent(eventAdded);
+      // this.getConsultas(this.selectedProfissional);
+
+      }, (err: any) => {
+        console.log(err);
+        this.isLoadingResults = false;
+      });
+    $('#myModal').modal('hide');
   }
   
 }

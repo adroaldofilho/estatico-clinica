@@ -65,34 +65,16 @@
         
         [closeOnEscape]="true"></p-confirmDialog>  
         </div>
-        <!-- <p-overlayPanel #op [showCloseIcon]="true" [dismissable]="false" appendTo="body">
-            <mat-card class="example-card">
-              <mat-card-header>
-                <mat-card-title><h2>{{paciente.nome}}</h2></mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <dl>
-                  <dt>Email:</dt>
-                  <dd>{{paciente.email}}</dd>
-                  <dt>Telefone:</dt>
-                  <dd>{{paciente.telefone}}</dd>
-                  <dt>Profissional:</dt>
-                  <dd>{{usuarioProfissional.nome}}</dd>
-                  <dt>Data/Hora:</dt>
-                  <dd>{{dataHoraConsulta}}</dd>
-              </dl>
-              </mat-card-content>
-              <mat-card-actions>
-                <a mat-flat-button color="warn" (click)="cancelaConsulta()">Cancelar</a> 
-              </mat-card-actions>
-            </mat-card>
-          </p-overlayPanel> -->
+
       <p-messages [value]="msgs"></p-messages>
-      <p-fullCalendar #fc 
+      <!-- <p-fullCalendar #fc 
           [events]="events" 
           [options]="options"
           >
-      </p-fullCalendar>
+      </p-fullCalendar> -->
+      <div id="calendar">
+
+      </div>
     </div>
   </mat-card-content>
   <mat-card-actions>
@@ -102,4 +84,31 @@
 </mat-card>
 </div>
 
-
+ 
+  <!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" 
+  role="dialog" aria-labelledby="myModal" aria-hidden="true" appendTo="body">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirma marcação de consulta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <dl>
+                <dt>Paciente:</dt>
+                <dd>{{paciente.nome}}</dd>
+                <dt>Hora:</dt>
+                <dd>{{dataHoraConsulta}}</dd>
+                <dt>Médico:</dt>
+                <dd>{{nomeMedico}}</dd>
+              </dl>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" (click)="confirmaConsulta()" autofocus>Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>

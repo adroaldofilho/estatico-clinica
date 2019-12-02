@@ -12,10 +12,9 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarDD">
         <div *ngIf="!isAuthenticated()"> 
             <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="">Início</a> </li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">Serviços</a> </li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contato</a> </li>
-                <li class="nav-item"><a class="nav-link" href="#social">Quem Somos</a> </li>
+                <li class="nav-item"><a class="nav-link" href="">Início</a> </li>
+                <!-- <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#modal-contato" href="#">Fale conosco</a> </li> -->
+                <li class="nav-item"><a class="nav-link" href="#contato">Contato</a> </li>
                 <li class="nav-item"><a class="nav-link" href="login">Login</a> </li>
             </ul>
         </div>
@@ -39,3 +38,45 @@
         </div>
     </div>
 </nav>
+  
+<!-- Modal -->
+<div class="modal fade" id="modal-contato" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <dialog class="modal-content">
+            <header class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Entre em contato</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </header>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nomeComentario">Nome completo</label>
+                        <input type="text" class="form-control" id="nomeComentario" aria-describedby="inputGroupPrepend"
+                                [(ngModel)]="nome" placeholder="Insira seu nome completo" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefoneComentario">Telefone</label>
+                        <input type="text" class="form-control" id="telefoneComentario" 
+                                [(ngModel)]="telefone" name="telefone" placeholder="(XX) 99999-9999" required>
+                        </div>
+                    <div class="form-group">
+                        <label for="emailComentario">Email</label>
+                        <input type="email" class="form-control" id="emailComentario" 
+                                [(ngModel)]="email" name="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="textoComentario">Deixe seu comentário</label>
+                        <textarea class="form-control" id="textoComentario" rows="3" 
+                                [(ngModel)]="comentario" name="comentario" placeholder="Insira aqui seu comentário" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <footer class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="submit" (click)="submitComment()" class="btn botao-cor-especial">Enviar</button>
+            </footer>
+          </dialog>
+        </div>
+      </div>
