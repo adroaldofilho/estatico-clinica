@@ -49,3 +49,40 @@
       </mat-card-actions>
   </mat-card>
 </p-overlayPanel>
+
+
+  <!-- Modal -->
+  <div class="modal" id="myModal" tabindex="-1" 
+    role="dialog" aria-labelledby="myModal" aria-hidden="true" appendTo="body">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <dl>
+                <dt>Paciente:</dt>
+                <dd>{{paciente.nome}}</dd>
+                <dt>Hora:</dt>
+                <dd>{{dataHoraConsulta}}</dd>
+                <dt>Médico:</dt>
+                <dd>{{nomeMedico}}</dd>
+              </dl>
+        </div>
+        <!-- <div class="modal-footer"> -->
+          <div class="btn-group-vertical">
+            <button type="button" class="btn btn-primary btn-block" (click)="confirmaConsulta()" >Confirmar Consulta</button>
+            <button type="button" class="btn btn-primary btn-block" (click)="pacienteChegou()" >Paciente Chegou</button>
+            <button type="button" *ngIf="isProfissionalLogado" class="btn btn-primary btn-block" 
+                [routerLink]="['/consulta-realiza', consulta.idConsulta]" data-dismiss="modal">Realizar Consulta</button>
+            <button type="button" class="btn btn-danger btn-block" (click)="cancelaConsulta()" >Cancelar Consulta</button>
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Fechar</button>
+          </div>  
+        <!-- </div> -->
+      
+    </div>
+  </div>
+  </div>

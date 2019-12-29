@@ -108,6 +108,14 @@ export class ConsultaRealizaComponent implements OnInit {
         this.documentoConsulta = data['payload'];
       });
     }
+    this.consultaApi.getConsultaByUsuario(this.paciente.idUsuario)
+    .subscribe((data: any) => {
+      // tslint:disable-next-line: no-string-literal
+      this.consultas = data['payload'];
+      this.consultas.map((consulta => {
+        consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
+      }));
+    });
     console.log('this.textoConsulta: ', this.textoConsulta);
   }
 

@@ -15,6 +15,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { Profissional } from 'src/model/profissional';
 import { Util } from '../util/util';
 import { AutoComplete } from 'primeng/autocomplete';
+declare var $: any;
 
 @Component({
   selector: 'app-consulta-lista',
@@ -26,7 +27,7 @@ import { AutoComplete } from 'primeng/autocomplete';
 export class ConsultaListaComponent implements OnInit {
   
   @ViewChild('op', {static: false}) op: OverlayPanel;
-  
+
   msgs: Message[] = [];
 
   profissionais: SelectItem[];
@@ -39,6 +40,7 @@ export class ConsultaListaComponent implements OnInit {
   events: any[];
   options: any;
   usuarioLogado: Usuario;
+  nomeMedico: string;
   paciente: Usuario = {
     idUsuario: 0,
     email: '',
@@ -112,6 +114,14 @@ export class ConsultaListaComponent implements OnInit {
       buttonText: {today: 'hoje', month: 'mês', week: 'semana', day: 'dia', list: 'lista'},
       eventClick: function(info) {
           self.mostraConsulta(info);
+      },
+      customButtons: {
+        atualizar: {
+          text: 'Atualizar',
+          click: function() {
+            self.getConsultas(self.selectedProfissional);
+          }
+        }
       }
     };
     let device = localStorage.getItem('device');
@@ -124,7 +134,7 @@ export class ConsultaListaComponent implements OnInit {
       }
     } else {
         header = {
-          left: 'prev,next today',
+          left: 'prev,next today atualizar',
           center: 'title',
           right: 'timeGridWeek,timeGridDay',
         }
@@ -233,11 +243,13 @@ export class ConsultaListaComponent implements OnInit {
 
   mostraConsulta(info){
     this.paciente = info.event.extendedProps.extendProps.consulta.Usuario;
-    console.log('info', info);
+    // console.log('info', info);
     this.consulta = info.event.extendedProps.extendProps.consulta;
     this.usuarioProfissional = info.event.extendedProps.extendProps.consulta.ProfissionalClinica.Profissional.Usuario;
+    this.nomeMedico = this.usuarioProfissional.nome;
     this.dataHoraConsulta = this.util.formatDate(this.consulta.dataHoraConsulta);
-    this.op.toggle(info.jsEvent);
+    // this.op.toggle(info.jsEvent);
+    $('#myModal').appendTo("body").modal('show');
   }
   
   confirmaConsulta(){
@@ -252,7 +264,8 @@ export class ConsultaListaComponent implements OnInit {
         console.log(err);
         this.isLoadingResults = false;
       });
-      this.op.hide();
+      $('#myModal').modal('hide');
+      // this.op.hide();
   }
 
   cancelaConsulta(){
@@ -279,6 +292,7 @@ export class ConsultaListaComponent implements OnInit {
         console.log(err);
         this.isLoadingResults = false;
       });
-      this.op.hide();
+      // this.op.hide();
+      $('#myModal').modal('hide');
     }
 }

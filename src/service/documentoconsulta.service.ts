@@ -28,6 +28,8 @@ export class DocumentoConsultaService {
   }
 
   updateDocumentoConsulta(id, documentoConsulta): Observable<any> {
+    const token = localStorage.getItem('token');
+    headers = headers.set('Authorization', `Bearer ${token}`);
     const url = `${apiUrl}/documentoconsulta/${id}/update`;
     return this.http.put(url, documentoConsulta, { headers }).pipe(
       tap(_ => console.log(`atualiza o DocumentoConsulta com id=${id}`)),
@@ -36,6 +38,8 @@ export class DocumentoConsultaService {
   }
 
   deleteDocumentoConsulta(id): Observable<DocumentoConsulta> {
+    const token = localStorage.getItem('token');
+    headers = headers.set('Authorization', `Bearer ${token}`);
     const url = `${apiUrl}/documentoconsulta/${id}/destroy`;
 
     return this.http.delete<DocumentoConsulta>(url, { headers }).pipe(
