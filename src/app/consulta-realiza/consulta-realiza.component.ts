@@ -17,15 +17,17 @@ import { Util } from '../util/util';
   styleUrls: ['./consulta-realiza.component.scss']
 })
 export class ConsultaRealizaComponent implements OnInit {
-  paciente: Usuario = { idUsuario: 0,
+  paciente: Usuario = {
+    idUsuario: 0,
     nome: '',
     email: '',
     telefone: '',
     senha: '',
     picture: null,
-    tipoUsuario: ''};
-    isLoadingResults = true;
-  
+    tipoUsuario: ''
+  };
+  isLoadingResults = true;
+
   consulta: Consulta = {
     idConsulta: 0,
     idPlano: 0,
@@ -34,7 +36,7 @@ export class ConsultaRealizaComponent implements OnInit {
     idUsuario: 0,
     statusConsulta: 0
   }
-  
+
   consultas: Consulta[];
 
   documentoConsulta: DocumentoConsulta = {
@@ -48,8 +50,8 @@ export class ConsultaRealizaComponent implements OnInit {
 
   textoConsultaSelecionada = '';
 
-  constructor(private route: ActivatedRoute, 
-    private api: UsuarioService, 
+  constructor(private route: ActivatedRoute,
+    private api: UsuarioService,
     private router: Router,
     private documentoConsultaApi: DocumentoConsultaService,
     private consultaApi: ConsultaService,
@@ -57,10 +59,10 @@ export class ConsultaRealizaComponent implements OnInit {
 
   ngOnInit() {
     this.getConsulta(this.route.snapshot.params['id']);
-    
+
     // this.getUsuarioDetalhe(this.route.snapshot.params['id']);
   }
-  
+
   getUsuarioDetalhe(id: any) {
     this.api.getUsuario(id)
       .subscribe((data: any) => {
@@ -69,7 +71,7 @@ export class ConsultaRealizaComponent implements OnInit {
         this.isLoadingResults = false;
       });
   }
-  getConsulta(id: any){
+  getConsulta(id: any) {
     this.consultaApi.getConsulta(id)
       .subscribe((data: any) => {
         // tslint:disable-next-line: no-string-literal
@@ -82,47 +84,59 @@ export class ConsultaRealizaComponent implements OnInit {
           this.documentoConsulta.idDocumentoConsulta = this.consulta.DocumentoConsulta[0].idDocumentoConsulta;
         }
         // this.consultas = this.paciente.Consulta;
-        
+
         this.consultaApi.getConsultaByUsuario(this.paciente.idUsuario)
-        .subscribe((data: any) => {
-          // tslint:disable-next-line: no-string-literal
-          this.consultas = data['payload'];
-          this.consultas.map((consulta => {
-            consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
-          }));
-        });
+          .subscribe((data: any) => {
+            // tslint:disable-next-line: no-string-literal
+            this.consultas = data['payload'];
+            this.consultas.map((consulta => {
+              consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
+            }));
+          });
         this.isLoadingResults = false;
       });
   }
-  
-  salvaDocumentoConsulta(){
+
+  salvaDocumentoConsulta() {
     this.documentoConsulta.textoDocumentoConsulta = this.textoConsulta;
+
     if (this.documentoConsulta.idDocumentoConsulta === 0) {
       this.documentoConsultaApi.addDocumentoConsulta(this.documentoConsulta)
-      .subscribe((data: any) => {
-        this.documentoConsulta = data['payload'];
-      });
+        .subscribe((data: any) => {
+          this.documentoConsulta = data['payload'];
+          this.getConsultaByUsuario(this.paciente.idUsuario);
+        });
     } else {
       this.documentoConsultaApi.updateDocumentoConsulta(this.documentoConsulta.idDocumentoConsulta, this.documentoConsulta)
-      .subscribe((data: any) => {
-        this.documentoConsulta = data['payload'];
-      });
+        .subscribe((data: any) => {
+          this.documentoConsulta = data['payload'][1][0];
+          this.getConsultaByUsuario(this.paciente.idUsuario);
+        });
     }
-    this.consultaApi.getConsultaByUsuario(this.paciente.idUsuario)
-    .subscribe((data: any) => {
-      // tslint:disable-next-line: no-string-literal
-      this.consultas = data['payload'];
-      this.consultas.map((consulta => {
-        consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
-      }));
-    });
-    console.log('this.textoConsulta: ', this.textoConsulta);
   }
 
-  selecionaConsulta(consulta){
+  getConsultaByUsuario(idUsuario) {
+    this.consultaApi.getConsultaByUsuario(idUsuario)
+      .subscribe((data: any) => {
+        // tslint:disable-next-line: no-string-literal
+        this.consultas = data['payload'];
+        this.consultas.map((consulta => {
+          consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
+        }));
+      });
+  }
+
+  selecionaConsulta(consulta) {
     this.textoConsultaSelecionada = '';
     if (consulta.DocumentoConsulta[0] !== undefined) {
       this.textoConsultaSelecionada = consulta.DocumentoConsulta[0].textoDocumentoConsulta;
+    }
+  }
+
+  atualizaProntuario($event) {
+    if ($event['index'] === 1) {
+      this.getConsultaByUsuario(this.paciente.idUsuario);
+      this.textoConsultaSelecionada = '';
     }
   }
 }

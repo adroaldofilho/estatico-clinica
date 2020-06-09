@@ -28,6 +28,7 @@ export class DocumentoConsultaService {
   }
 
   updateDocumentoConsulta(id, documentoConsulta): Observable<any> {
+    console.log('id: ', id);
     const token = localStorage.getItem('token');
     headers = headers.set('Authorization', `Bearer ${token}`);
     const url = `${apiUrl}/documentoconsulta/${id}/update`;
