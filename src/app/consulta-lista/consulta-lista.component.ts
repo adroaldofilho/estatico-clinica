@@ -26,7 +26,7 @@ declare var $: any;
 
 export class ConsultaListaComponent implements OnInit {
   
-  @ViewChild('op', {static: false}) op: OverlayPanel;
+  @ViewChild('op') op: OverlayPanel;
 
   msgs: Message[] = [];
 

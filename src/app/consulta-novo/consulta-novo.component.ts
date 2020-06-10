@@ -32,7 +32,7 @@ declare var $: any;
 
 
 export class ConsultaNovoComponent implements OnInit {
-  @ViewChild('op', {static: false}) op: OverlayPanel;
+  @ViewChild('op') op: OverlayPanel;
   @ViewChild('modalConfirma', {static: true}) modalConfirma: any;
   // @ViewChild('calendar', {static: false}) calendar: any;
   msgs: Message[] = [];
