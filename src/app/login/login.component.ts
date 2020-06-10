@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/service/authentication.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material'
+import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
