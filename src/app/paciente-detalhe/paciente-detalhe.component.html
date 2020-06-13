@@ -25,4 +25,17 @@
       <a mat-flat-button color="warn" (click)="deleteUsuario(usuario.idUsuario)"><mat-icon>delete</mat-icon></a>
     </mat-card-actions>
   </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Prontuário">
+          <div fxLayout="column" fxFlexAlign="left">
+              <textarea [(ngModel)]="prontuario" rows="20" cols="100" pInputTextarea autoResize="autoResize"
+                  disabled="true"></textarea>
+
+          </div>
+      </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
 </div>
