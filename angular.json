@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "estatico-clinica"
+  "defaultProject": "estatico-clinica",
+  "cli": {
+    "analytics": "eeb65ff0-bf6d-4533-819c-fc2d428bd915"
+  }
 }

@@ -44,12 +44,14 @@ export class ConsultaRealizaComponent implements OnInit {
     idConsulta: 0,
     textoDocumentoConsulta: ''
   }
+
   textoConsulta: string;
   tituloConsulta = '';
+
   util = new Util();
 
   textoConsultaSelecionada = '';
-
+  prontuario = '';
   constructor(private route: ActivatedRoute,
     private api: UsuarioService,
     private router: Router,
@@ -89,8 +91,15 @@ export class ConsultaRealizaComponent implements OnInit {
           .subscribe((data: any) => {
             // tslint:disable-next-line: no-string-literal
             this.consultas = data['payload'];
+            console.log('Consultas: ', this.consultas);
             this.consultas.map((consulta => {
+              
               consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
+              this.prontuario = this.prontuario + ' - - - - - - - - - - - - - - - - - - - - ' + 
+                            consulta['dataHoraFormatada'] + 
+                            ' - - - - - - - - - - - - - - - - - - - -\n' +
+                            consulta.DocumentoConsulta[0].textoDocumentoConsulta + '\n\n';
+
             }));
           });
         this.isLoadingResults = false;
@@ -119,9 +128,14 @@ export class ConsultaRealizaComponent implements OnInit {
     this.consultaApi.getConsultaByUsuario(idUsuario)
       .subscribe((data: any) => {
         // tslint:disable-next-line: no-string-literal
+        this.prontuario = '';
         this.consultas = data['payload'];
         this.consultas.map((consulta => {
           consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
+          this.prontuario = this.prontuario + ' - - - - - - - - - - - - - - - - - - - - ' + 
+          consulta['dataHoraFormatada'] + 
+          ' - - - - - - - - - - - - - - - - - - - -\n' +
+          consulta.DocumentoConsulta[0].textoDocumentoConsulta + '\n\n';
         }));
       });
   }
