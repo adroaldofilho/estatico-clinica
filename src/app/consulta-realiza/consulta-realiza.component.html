@@ -28,11 +28,11 @@
 
             <mat-tab label="Consulta">
 
-                <div fxLayout="column" fxFlex="70">
+                <div fxLayout="column">
                     <div fxLayout="column" fxFlex="15">
                         <h2 style="padding-top: 15px;">Consulta: </h2>
                     </div>
-                    <div fxLayout="column" fxFlex="80">
+                    <div fxLayout="column">
                         <textarea [(ngModel)]="textoConsulta" rows="20" cols="200" pInputTextarea
                             autoResize="autoResize"></textarea>
                     </div>
@@ -60,7 +60,7 @@
 
             </mat-tab>
             <mat-tab label="Prontuário Total">
-                <div fxLayout="column" fxFlex="70" fxFlexAlign="left">
+                <div fxLayout="column" fxFlexAlign="left">
                     <textarea [(ngModel)]="prontuario" rows="20" cols="100" pInputTextarea autoResize="autoResize"
                         disabled="true"></textarea>
 
