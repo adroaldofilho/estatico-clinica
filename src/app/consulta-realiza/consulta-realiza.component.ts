@@ -52,6 +52,9 @@ export class ConsultaRealizaComponent implements OnInit {
 
   textoConsultaSelecionada = '';
   prontuario = '';
+  device = localStorage.getItem('device');
+  linhaTracejada = '';
+    
   constructor(private route: ActivatedRoute,
     private api: UsuarioService,
     private router: Router,
@@ -61,7 +64,12 @@ export class ConsultaRealizaComponent implements OnInit {
 
   ngOnInit() {
     this.getConsulta(this.route.snapshot.params['id']);
-
+    if (this.device === 'mobile'){
+      this.linhaTracejada = '' 
+    }
+    else {
+      this.linhaTracejada = ' - - - - - - - - - - - - - - - - - - - - '; 
+    }
     // this.getUsuarioDetalhe(this.route.snapshot.params['id']);
   }
 
@@ -95,9 +103,9 @@ export class ConsultaRealizaComponent implements OnInit {
             this.consultas.map((consulta => {
               
               consulta['dataHoraFormatada'] = this.util.formatDate(consulta.dataHoraConsulta);
-              this.prontuario = this.prontuario + ' - - - - - - - - - - - - - - - - - - - - ' + 
+              this.prontuario = this.prontuario + this.linhaTracejada + 
                             consulta['dataHoraFormatada'] + 
-                            ' - - - - - - - - - - - - - - - - - - - -\n' +
+                            this.linhaTracejada + '\n' +
                             consulta.DocumentoConsulta[0].textoDocumentoConsulta + '\n\n';
 
             }));
